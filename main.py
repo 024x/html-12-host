@@ -8,9 +8,15 @@ from fastapi import FastAPI, File, UploadFile, HTTPException, Request, Backgroun
 from fastapi.responses import FileResponse
 from fastapi.templating import Jinja2Templates
 
+
+def generate_random_string(length):
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for _ in range(length))
+
+
 app = FastAPI()
 templates = Jinja2Templates(directory="files")
-app.secret_key = os.getenv("SKEY", "secret")
+app.secret_key = os.getenv("SKEY", generate_random_string(32))
 
 
 async def delete_file_after_delay(file_path, delay):
@@ -21,11 +27,6 @@ async def delete_file_after_delay(file_path, delay):
         os.remove(file_path)
 
     await de()
-
-
-def generate_random_string(length):
-    letters = string.ascii_lowercase
-    return ''.join(random.choice(letters) for _ in range(length))
 
 
 @app.get("/")
