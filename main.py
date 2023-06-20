@@ -87,4 +87,5 @@ async def u_p_l(background_tasks: BackgroundTasks, file: UploadFile = File(...),
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("main:app", host="0.0.0.0", port=os.getenv("PORT", 5000), reload=True)
+    # server forced me to do this :(
+    uvicorn.run("main:app", host="0.0.0.0", port=int(os.getenv("PORT", 5000)), reload=True)
